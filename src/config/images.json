@@ -1,0 +1,75 @@
+{
+  "arch": {
+    "width": 1472,
+    "height": 1104,
+    "widths": [
+      480,
+      828,
+      1200,
+      1472
+    ],
+    "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAwAA4BaJaACdADwT0bmU7AA/q2aKeiX3b1VCoW3ra6+jOmeUgS6Ni7Q+90GCM8QUsPIzYzPdJ+hp4AAAA=="
+  },
+  "botanical": {
+    "width": 1104,
+    "height": 1472,
+    "widths": [
+      480,
+      828,
+      1104
+    ],
+    "blur": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAAAQBACdASoQABUAPu1iqU2ppaOiMAgBMB2JZQAAWpyfdziNAgB0exC6AAD+7q86Il1R1QSSsJPBV3e4FiJLN0FYqn1s4mnTUZOtazdH0jPeBROh48korbBmaoVXKTBazeEJJYOD2vU+UxTNKIuKLcdj8VFfwyEweeRVuKnDyb9W9AAA"
+  },
+  "cream": {
+    "width": 1104,
+    "height": 1472,
+    "widths": [
+      480,
+      828,
+      1104
+    ],
+    "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JZQCdMoADTrMoz4PZihNQAP7S2qZ4/DvLkmcfuqzc85gh2ORoARSXozbghwLbQSWwNHLg91WQCnGkAAA="
+  },
+  "glass": {
+    "width": 1104,
+    "height": 1472,
+    "widths": [
+      480,
+      828,
+      1104
+    ],
+    "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAABwAwCdASoQABUAPu1kqU2ppaQiMAgBMB2JZWVuRgATj0da7AAA/uaKfruav9EKuB7dU9pEF87ZUshLaG0mrCfCLqu7cQAA"
+  },
+  "portrait": {
+    "width": 1296,
+    "height": 1728,
+    "widths": [
+      480,
+      828,
+      1200,
+      1296
+    ],
+    "blur": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAAAwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JQBOmUABwaHdc2x3X6zeP9KAA/uHPk5oeGWwWMBzWOL79L6N2LS/MGCrAd0C+YG0aM3M3L2nYEgpCISIXHhcgxMF5AEW9/U0y02sWl+zXUHfXQ2bFyuYVLKDQmn7Zuqxal7OFVlDwm/Wz7hwyUCAA"
+  },
+  "strands": {
+    "width": 1104,
+    "height": 1472,
+    "widths": [
+      480,
+      828,
+      1104
+    ],
+    "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACwAwCdASoQABUAPu1kqk4ppaQiMAgBMB2JQBWABDnM5rqkhnctAAD+6T91STj/NkkYT+1oBB2Ec5dskphyrsv/BZeFbgAA"
+  },
+  "texture": {
+    "width": 1472,
+    "height": 1104,
+    "widths": [
+      480,
+      828,
+      1200,
+      1472
+    ],
+    "blur": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACwAQCdASoQAAwAA4BaJQBOgCHfUi0AAP7etBuQCP4wmknQ2UDXEgAA"
+  }
+}
