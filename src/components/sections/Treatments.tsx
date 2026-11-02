@@ -10,8 +10,6 @@ import type { TreatmentCategory } from "@/config/types";
 import { waTreatment } from "@/lib/links";
 import { AvailabilityTag } from "@/components/ui/AvailabilityTag";
 import { Picture } from "@/components/ui/Picture";
-import { CellField } from "@/components/art/CellField";
-import { Strands } from "@/components/art/Strands";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -19,29 +17,18 @@ function CategoryArt({ cat }: { cat: TreatmentCategory }) {
   if (cat.theme.art === "cells")
     return (
       <div className="absolute inset-0 bg-[#cfd2bf]">
-        <div className="absolute inset-[8%] overflow-hidden rounded-full">
-          <Picture
-            name="botanical"
-            sizes="(min-width: 1024px) 45vw, 90vw"
-            alt=""
-            className="h-full w-full object-cover opacity-90 mix-blend-multiply"
-          />
-        </div>
-        <CellField className="absolute inset-0 h-full w-full text-olive-deep" cols={12} rows={10} seed={5} />
+        <Picture name="botanical" sizes="(min-width: 1024px) 45vw, 90vw" alt="" className="h-full w-full object-cover" />
       </div>
     );
   if (cat.theme.art === "glass")
     return (
       <div className="absolute inset-0 bg-[#e3c6bb]">
-        <div className="absolute inset-x-[14%] bottom-0 top-[10%] overflow-hidden rounded-t-full">
-          <Picture name="glass" sizes="(min-width: 1024px) 40vw, 80vw" alt="" className="h-full w-full scale-110 object-cover" />
-        </div>
+        <Picture name="glass" sizes="(min-width: 1024px) 45vw, 90vw" alt="" className="h-full w-full object-cover" />
       </div>
     );
   return (
     <div className="absolute inset-0 bg-forest">
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_40%,rgba(232,188,157,0.16),transparent_60%)]" />
-      <Strands className="absolute inset-0 h-full w-full text-peach" count={34} />
+      <Picture name="strands" sizes="(min-width: 1024px) 45vw, 90vw" alt="" className="h-full w-full object-cover" />
     </div>
   );
 }
@@ -86,7 +73,7 @@ export function Treatments() {
       <div className="mx-auto max-w-[1600px] px-5 md:px-10">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
           <div className="lg:col-span-8">
-            <Heading id="treatments-title" text="A closer look at your skin’s needs." className="max-w-[14ch]" />
+            <Heading id="treatments-title" text="Areas of care." className="max-w-[14ch]" />
           </div>
           <p className="measure opacity-80 lg:col-span-4">
             Choose an area to see the conditions and procedures you can ask Dr. Aditya about. Procedures are discussed only after an
@@ -119,7 +106,6 @@ export function Treatments() {
                     onKeyDown={(e) => onTabKey(e, i)}
                     className="group relative flex shrink-0 items-center gap-4 py-4 text-left lg:w-full lg:border-b lg:border-current/20 lg:py-6"
                   >
-                    {/* Active marker: a short rule that draws in beside the selected category (underline on small screens) */}
                     <span
                       aria-hidden
                       className={`absolute inset-x-0 bottom-0 h-[2px] origin-left bg-current transition-transform duration-700 ease-out-expo lg:static lg:h-px lg:w-10 lg:shrink-0 ${
@@ -127,7 +113,7 @@ export function Treatments() {
                       }`}
                     />
                     <span
-                      className={`font-serif leading-[1.08] tracking-[-0.02em] transition-[opacity,transform] duration-700 ease-out-expo text-[1.65rem] lg:text-[clamp(2rem,4.2vw,3.6rem)] ${
+                      className={`font-serif text-[1.65rem] leading-[1.08] tracking-[-0.02em] transition-[opacity,transform] duration-700 ease-out-expo lg:text-[clamp(2rem,4.2vw,3.6rem)] ${
                         selected ? "italic opacity-100" : "opacity-65 group-hover:opacity-90 lg:group-hover:translate-x-2"
                       }`}
                     >
@@ -151,7 +137,7 @@ export function Treatments() {
                   <p className="measure text-lead opacity-90">{cat.intro}</p>
 
                   {/* Mobile / tablet art */}
-                  <div className="relative mt-8 aspect-[4/3] overflow-hidden lg:hidden">
+                  <div className="relative mt-8 aspect-[4/3] overflow-hidden border border-current/15 lg:hidden">
                     <CategoryArt cat={cat} />
                   </div>
 
@@ -236,34 +222,23 @@ export function Treatments() {
 
           {/* Sticky visual (desktop) */}
           <div className="hidden lg:col-span-6 lg:block">
-            <div className="sticky top-24">
-              <div className="relative aspect-[4/5] max-h-[78vh] w-full overflow-hidden">
+            <div className="sticky top-28">
+              <div className="relative aspect-[4/5] max-h-[76vh] w-full overflow-hidden border border-current/15">
                 <AnimatePresence initial={false}>
                   <m.div
                     key={cat.id}
                     className="absolute inset-0"
-                    initial={reduce ? false : { clipPath: "inset(0% 0% 100% 0%)", scale: 1.08 }}
-                    animate={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+                    initial={reduce ? false : { opacity: 0, scale: 1.03 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     exit={reduce ? undefined : { opacity: 0 }}
-                    transition={{ duration: 1.1, ease }}
+                    transition={{ duration: 0.85, ease }}
                   >
                     <CategoryArt cat={cat} />
                   </m.div>
                 </AnimatePresence>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end justify-between p-6">
-                  <AnimatePresence mode="wait" initial={false}>
-                    <m.p
-                      key={cat.id}
-                      className={`font-serif text-[clamp(3rem,6vw,6rem)] italic leading-[1.02] ${dark ? "text-ivory" : "text-espresso"}`}
-                      initial={reduce ? false : { y: 40, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={reduce ? undefined : { y: -20, opacity: 0 }}
-                      transition={{ duration: 0.8, ease, delay: 0.2 }}
-                      aria-hidden
-                    >
-                      {cat.shortName}
-                    </m.p>
-                  </AnimatePresence>
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-center justify-between border-t border-ivory/20 bg-espresso/75 px-6 py-4 text-ivory backdrop-blur-md">
+                  <span className="label text-ivory/75">Area of care</span>
+                  <span className="font-serif text-2xl italic text-peach">{cat.name}</span>
                 </div>
               </div>
             </div>

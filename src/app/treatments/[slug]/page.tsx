@@ -70,7 +70,7 @@ export default async function TreatmentPage({ params }: PageProps<"/treatments/[
               by="chars"
               delay={0.1}
               className="mt-8 font-serif text-[clamp(3.2rem,9vw,9rem)] leading-[1] tracking-[-0.03em]"
-              lines={[{ text: f.titleLines[0] }, { text: f.titleLines[1], italic: true, className: "pl-[0.5em]" }]}
+              lines={[{ text: f.titleLines[0] }, { text: f.titleLines[1], italic: true, className: "pl-[0.15em]" }]}
             />
             <p className="mt-8 max-w-[44ch] text-lead opacity-90">{f.summary}</p>
             <p className="label mt-6 opacity-70">
@@ -88,7 +88,7 @@ export default async function TreatmentPage({ params }: PageProps<"/treatments/[
           <div className="md:col-span-4 md:col-start-9">
             <Reveal variant="mask">
               <figure>
-                <div className="aspect-[4/5] overflow-hidden rounded-t-full">
+                <div className="aspect-[4/5] overflow-hidden border border-current/15">
                   <Picture
                     name={resolveArt(f.art, f.fallbackArt)}
                     priority

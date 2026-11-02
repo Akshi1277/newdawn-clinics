@@ -85,16 +85,16 @@ export function Nav() {
   return (
     <>
       <m.header
-        className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 md:px-5 md:pt-4"
+        className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 md:px-10 md:pt-4"
         initial={reduce ? false : { y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease, delay: isHome ? 1.25 : 0.2 }}
+        transition={{ duration: 1, ease, delay: isHome ? 1.0 : 0.2 }}
       >
         <div
-          className={`pointer-events-auto flex w-full items-center justify-between gap-6 rounded-full transition-[max-width,background-color,box-shadow,padding,backdrop-filter] duration-700 ease-out-expo ${
+          className={`pointer-events-auto flex w-full max-w-[1600px] items-center justify-between gap-6 rounded-full transition-[background-color,box-shadow,padding,backdrop-filter] duration-500 ease-out-expo ${
             scrolled
-              ? "max-w-[1180px] bg-ivory/80 py-2 pl-5 pr-2 shadow-[0_18px_50px_-24px_rgba(42,31,26,0.45)] backdrop-blur-xl backdrop-saturate-150 ring-1 ring-espresso/10"
-              : "max-w-[1600px] bg-transparent py-3 pl-2 pr-1 md:pl-4"
+              ? "bg-ivory/90 py-2 pl-5 pr-2 shadow-[0_18px_50px_-24px_rgba(42,31,26,0.4)] backdrop-blur-xl backdrop-saturate-150 ring-1 ring-espresso/10"
+              : "bg-transparent py-3 pl-2 pr-1 md:pl-0"
           }`}
         >
           <Logo />
@@ -175,9 +175,9 @@ export function Nav() {
                       <Link
                         href={item.href}
                         onClick={() => setOpen(false)}
-                        className="flex items-baseline justify-between py-3.5 font-serif text-[2.6rem] leading-none tracking-tight"
+                        className="flex items-baseline justify-between py-3.5 font-serif text-[2.6rem] leading-none tracking-tight transition-colors hover:text-peach"
                       >
-                        <span className={i % 2 ? "italic" : ""}>{item.label}</span>
+                        <span>{item.label}</span>
                         <span aria-hidden className="font-sans text-xs text-ivory/50">
                           {String(i + 1).padStart(2, "0")}
                         </span>
