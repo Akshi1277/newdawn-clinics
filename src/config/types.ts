@@ -41,15 +41,31 @@ export type FeaturedTreatment = {
   factors: { heading: string; items: string[] };
   approaches: string[];
   consultation: string;
-  art: "cream" | "glass" | "texture" | "botanical" | "strands" | "arch";
+  /** Preferred image name in assets/source (e.g. "acne"); used automatically once that file exists. */
+  art: string;
+  /** Existing artwork shown until the preferred image is added. */
+  fallbackArt: "cream" | "glass" | "texture" | "botanical" | "strands" | "arch";
   theme: { bg: string; fg: string };
   /** Treatment slugs (in the catalogue) this feature relates to — drives availability wording */
   related: string[];
 };
 
-export type Credential = {
-  label: string;
-  value: Pending<string>;
+/** One degree, e.g. { degree: "MBBS", institution: "…", year: "2012" } */
+export type Degree = { degree: string; institution?: string; year?: string };
+
+/** Medical registration, e.g. { council: "Maharashtra Medical Council", number: "…" } */
+export type Registration = { council: string; number: string };
+
+/**
+ * Dr. Aditya's credentials, grouped. Every entry is Pending: it renders on the
+ * site and in structured data ONLY once its `verified` flag is true.
+ */
+export type DoctorCredentials = {
+  education: Pending<Degree>[];
+  registration: Pending<Registration>;
+  experience: Pending<string>;
+  training: Pending<string>[];
+  memberships: Pending<string>[];
 };
 
 export type Faq = {

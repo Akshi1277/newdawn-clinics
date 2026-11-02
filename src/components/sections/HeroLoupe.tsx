@@ -1,16 +1,7 @@
 "use client";
 
-import {
-  AnimatePresence,
-  animate,
-  m,
-  useMotionTemplate,
-  useMotionValue,
-  useMotionValueEvent,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { AnimatePresence, animate, m, useMotionTemplate, useMotionValue, useMotionValueEvent, useSpring, useTransform } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 import { useEffect, useRef, useState } from "react";
 import manifest from "@/config/images.json";
 import { Picture } from "@/components/ui/Picture";
@@ -34,7 +25,7 @@ const ZOOM = 2.3;
  */
 export function HeroLoupe() {
   const box = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [active, setActive] = useState(0);
   const [hovering, setHovering] = useState(false);
@@ -95,6 +86,17 @@ export function HeroLoupe() {
     py.set(Math.min(96, Math.max(4, ((e.clientY - r.top) / r.height) * 100)));
   };
 
+  // Keyboard: arrow keys step the lens between the four areas.
+  const onKey = (e: React.KeyboardEvent) => {
+    const dir = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+    if (!dir) return;
+    e.preventDefault();
+    setHovering(true);
+    const next = (active + dir + SPOTS.length) % SPOTS.length;
+    animate(px, SPOTS[next].x, { duration: reduce ? 0 : 0.9, ease });
+    animate(py, SPOTS[next].y, { duration: reduce ? 0 : 0.9, ease });
+  };
+
   const left = useTransform(sx, (v) => `calc(${v}% - ${lens / 2}px)`);
   const top = useTransform(sy, (v) => `calc(${v}% - ${lens / 2}px)`);
   const bgX = useTransform(sx, (v) => -((v / 100) * size.w * ZOOM - lens / 2));
@@ -111,6 +113,13 @@ export function HeroLoupe() {
         onPointerEnter={(e) => e.pointerType === "mouse" && setHovering(true)}
         onPointerLeave={() => setHovering(false)}
         onPointerMove={onMove}
+        onKeyDown={onKey}
+        onFocus={() => setHovering(true)}
+        onBlur={() => setHovering(false)}
+        tabIndex={0}
+        role="group"
+        aria-roledescription="interactive portrait"
+        aria-label="Dermatologist’s lens. Use the arrow keys to move between the areas a dermatologist examines."
         className="relative aspect-[3/4] w-full cursor-none overflow-hidden rounded-t-[999px] bg-[#e7d8c6] shadow-[0_50px_100px_-50px_rgba(42,31,26,0.6)]"
       >
         <Picture

@@ -54,18 +54,32 @@ export function clinicJsonLd() {
     address,
     worksFor: { "@id": clinicId },
   };
-  const creds = doctor.credentials.filter((c) => isVerified(c.value));
-  if (creds.length) {
-    physician.hasCredential = creds.map((c) => ({
+  // Credentials: only verified entries are emitted.
+  const c = doctor.credentials;
+  const hasCredential: Record<string, unknown>[] = [];
+  for (const d of c.education) {
+    if (!isVerified(d)) continue;
+    hasCredential.push({
       "@type": "EducationalOccupationalCredential",
-      credentialCategory: c.label,
-      name: c.value.value,
-    }));
+      credentialCategory: "degree",
+      name: d.value.degree,
+      ...(d.value.institution ? { recognizedBy: { "@type": "CollegeOrUniversity", name: d.value.institution } } : {}),
+    });
   }
+  if (isVerified(c.registration)) {
+    hasCredential.push({
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "medical registration",
+      name: `${c.registration.value.council} registration ${c.registration.value.number}`,
+      recognizedBy: { "@type": "Organization", name: c.registration.value.council },
+    });
+  }
+  if (hasCredential.length) physician.hasCredential = hasCredential;
+  const memberships = c.memberships.filter(isVerified).map((m) => ({ "@type": "Organization", name: m.value }));
+  if (memberships.length) physician.memberOf = memberships;
   if (url) physician.url = `${url}/#doctor`;
 
   return { "@context": "https://schema.org", "@graph": [clinic, physician] };
 }
 
 export const jsonLdString = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
-

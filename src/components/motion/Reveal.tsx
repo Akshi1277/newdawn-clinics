@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion } from "framer-motion";
+import { m } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 import type { ReactNode } from "react";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -22,7 +23,7 @@ const variants = {
 };
 
 export function Reveal({ children, className, delay = 0, variant = "fade", as = "div" }: Props) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const M = m[as];
   if (reduce) {
     const Plain = as;

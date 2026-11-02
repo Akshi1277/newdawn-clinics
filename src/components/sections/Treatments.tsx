@@ -1,7 +1,8 @@
 "use client";
 
 import { Heading } from "@/components/ui/Heading";
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 import { ArrowUpRight, Plus } from "lucide-react";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { treatmentCategories } from "@/config/site";
@@ -39,8 +40,8 @@ function CategoryArt({ cat }: { cat: TreatmentCategory }) {
     );
   return (
     <div className="absolute inset-0 bg-forest">
-      <Picture name="strands" sizes="(min-width: 1024px) 45vw, 90vw" alt="" className="h-full w-full object-cover opacity-80" />
-      <Strands className="absolute inset-0 h-full w-full text-peach" />
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_40%,rgba(232,188,157,0.16),transparent_60%)]" />
+      <Strands className="absolute inset-0 h-full w-full text-peach" count={34} />
     </div>
   );
 }
@@ -48,7 +49,7 @@ function CategoryArt({ cat }: { cat: TreatmentCategory }) {
 export function Treatments() {
   const [active, setActive] = useState(0);
   const [openItem, setOpenItem] = useState<string | null>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const uid = useId();
   const cat = treatmentCategories[active];
@@ -83,11 +84,11 @@ export function Treatments() {
       transition={{ duration: reduce ? 0 : 0.9, ease }}
     >
       <div className="mx-auto max-w-[1600px] px-5 md:px-10">
-        <div className="grid gap-10 md:grid-cols-12 md:items-end">
-          <div className="md:col-span-8">
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
+          <div className="lg:col-span-8">
             <Heading id="treatments-title" text="A closer look at your skin’s needs." className="max-w-[14ch]" />
           </div>
-          <p className="measure opacity-80 md:col-span-4">
+          <p className="measure opacity-80 lg:col-span-4">
             Choose an area to see the conditions and procedures you can ask Dr. Aditya about. Procedures are discussed only after an
             assessment, and the clinic confirms which are currently available.
           </p>
@@ -96,7 +97,11 @@ export function Treatments() {
         <div className="mt-16 grid gap-10 lg:mt-24 lg:grid-cols-12 lg:gap-12">
           {/* Category navigation + list */}
           <div className="lg:col-span-6">
-            <div role="tablist" aria-label="Treatment categories" aria-orientation="vertical" className="border-t border-current/20">
+            <div
+              role="tablist"
+              aria-label="Treatment categories"
+              className="no-scrollbar -mx-5 flex gap-7 overflow-x-auto border-b border-current/20 px-5 lg:mx-0 lg:block lg:overflow-visible lg:border-b-0 lg:border-t lg:px-0"
+            >
               {treatmentCategories.map((c, i) => {
                 const selected = i === active;
                 return (
@@ -112,14 +117,22 @@ export function Treatments() {
                     tabIndex={selected ? 0 : -1}
                     onClick={() => select(i)}
                     onKeyDown={(e) => onTabKey(e, i)}
-                    className="group flex w-full items-baseline justify-between gap-6 border-b border-current/20 py-5 text-left md:py-6"
+                    className="group relative flex shrink-0 items-center gap-4 py-4 text-left lg:w-full lg:border-b lg:border-current/20 lg:py-6"
                   >
+                    {/* Active marker: a short rule that draws in beside the selected category (underline on small screens) */}
                     <span
-                      className={`font-serif text-[clamp(2rem,4.2vw,3.6rem)] leading-none tracking-[-0.02em] transition-[opacity,transform] duration-700 ease-out-expo ${
-                        selected ? "translate-x-0 italic opacity-100" : "opacity-65 group-hover:translate-x-2 group-hover:opacity-90"
+                      aria-hidden
+                      className={`absolute inset-x-0 bottom-0 h-[2px] origin-left bg-current transition-transform duration-700 ease-out-expo lg:static lg:h-px lg:w-10 lg:shrink-0 ${
+                        selected ? "scale-x-100" : "scale-x-0"
+                      }`}
+                    />
+                    <span
+                      className={`font-serif leading-none tracking-[-0.02em] transition-[opacity,transform] duration-700 ease-out-expo text-[1.65rem] lg:text-[clamp(2rem,4.2vw,3.6rem)] ${
+                        selected ? "italic opacity-100" : "opacity-65 group-hover:opacity-90 lg:group-hover:translate-x-2"
                       }`}
                     >
-                      {c.name}
+                      <span className="lg:hidden">{c.shortName}</span>{" "}
+                      <span className="hidden lg:inline">{c.name}</span>
                     </span>
                   </button>
                 );
@@ -143,11 +156,17 @@ export function Treatments() {
                   </div>
 
                   <ul className="mt-8 border-t border-current/20">
-                    {cat.treatments.map((t) => {
+                    {cat.treatments.map((t, ti) => {
                       const open = openItem === t.slug;
                       const pid = `${uid}-${t.slug}`;
                       return (
-                        <li key={t.slug} className="border-b border-current/20">
+                        <m.li
+                          key={t.slug}
+                          className="border-b border-current/20"
+                          initial={reduce ? false : { opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, ease, delay: 0.08 + ti * 0.035 }}
+                        >
                           <h3 className="font-sans text-base font-normal">
                             <button
                               type="button"
@@ -206,7 +225,7 @@ export function Treatments() {
                               </m.div>
                             )}
                           </AnimatePresence>
-                        </li>
+                        </m.li>
                       );
                     })}
                   </ul>

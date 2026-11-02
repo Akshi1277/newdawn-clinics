@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { allTreatments, featured, messages, business } from "@/config/site";
+import { allTreatments, featured, business } from "@/config/site";
 import { siteUrl, waTreatment, telLink } from "@/lib/links";
 import { jsonLdString } from "@/lib/jsonld";
 import { SplitText } from "@/components/motion/SplitText";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
-import { Picture } from "@/components/ui/Picture";
+import { ART_ALT, Picture, resolveArt } from "@/components/ui/Picture";
 import { AvailabilityTag } from "@/components/ui/AvailabilityTag";
 
 export const dynamicParams = false;
@@ -28,15 +28,6 @@ export async function generateMetadata({ params }: PageProps<"/treatments/[slug]
     openGraph: { title: f.seoTitle, description: f.seoDescription, type: "article" },
   };
 }
-
-const ALT: Record<string, string> = {
-  cream: "Abstract artwork: a soft swirl of ivory cream",
-  glass: "Abstract artwork: a translucent amber glass ribbon",
-  texture: "Abstract artwork: macro study of fine surface relief",
-  botanical: "Abstract artwork: sage leaves in soft shadow",
-  strands: "Abstract artwork: fine golden strands flowing across deep green",
-  arch: "Abstract artwork: warm light falling across a plaster arch",
-};
 
 export default async function TreatmentPage({ params }: PageProps<"/treatments/[slug]">) {
   const { slug } = await params;
@@ -99,10 +90,10 @@ export default async function TreatmentPage({ params }: PageProps<"/treatments/[
               <figure>
                 <div className="aspect-[4/5] overflow-hidden rounded-t-full">
                   <Picture
-                    name={f.art}
+                    name={resolveArt(f.art, f.fallbackArt)}
                     priority
                     sizes="(min-width: 768px) 30vw, 90vw"
-                    alt={ALT[f.art]}
+                    alt={ART_ALT[resolveArt(f.art, f.fallbackArt)]}
                     className="h-full w-full object-cover"
                   />
                 </div>
@@ -144,7 +135,7 @@ export default async function TreatmentPage({ params }: PageProps<"/treatments/[
 
             <section aria-labelledby="approaches" className="mt-20">
               <h2 id="approaches" className="font-serif text-display-m">
-                Approaches that <span className="italic">may</span> be discussed
+                Approaches Dr. Aditya may discuss
               </h2>
               <ol className="mt-8 border-t border-line">
                 {f.approaches.map((a, i) => (
@@ -182,7 +173,7 @@ export default async function TreatmentPage({ params }: PageProps<"/treatments/[
                     {related.map((t) => (
                       <li key={t.slug} className="flex items-center justify-between gap-4 border-b border-line py-3.5">
                         <span>{t.name}</span>
-                        <AvailabilityTag availability={t.availability} />
+                        {(t.procedure || t.availability === "confirmed") && <AvailabilityTag availability={t.availability} />}
                       </li>
                     ))}
                   </ul>
@@ -211,7 +202,6 @@ export default async function TreatmentPage({ params }: PageProps<"/treatments/[
               </li>
             ))}
           </ul>
-          <p className="mt-12 max-w-[80ch] text-sm text-espresso/75">{messages.medicalDisclaimer}</p>
         </div>
       </nav>
     </article>

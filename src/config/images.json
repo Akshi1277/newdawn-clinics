@@ -1,4 +1,14 @@
 {
+  "acne": {
+    "width": 896,
+    "height": 1200,
+    "widths": [
+      480,
+      828,
+      896
+    ],
+    "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoQABUAPu1iqU2ppaOiMAgBMB2JYgCw7CbSj00HRl5wcMHgAAD8eE6luMnZA+RBTl9fsl9IKEOxynZELZz/tcDoeYs7BbuMJqvkOrFiCzVUfUglpbGZmwfcgDLhzXAA"
+  },
   "arch": {
     "width": 1472,
     "height": 1104,
@@ -40,6 +50,26 @@
     ],
     "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAABwAwCdASoQABUAPu1kqU2ppaQiMAgBMB2JZWVuRgATj0da7AAA/uaKfruav9EKuB7dU9pEF87ZUshLaG0mrCfCLqu7cQAA"
   },
+  "laser": {
+    "width": 896,
+    "height": 1200,
+    "widths": [
+      480,
+      828,
+      896
+    ],
+    "blur": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAABwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JZgCdMoRwA8AA7c0E39bQ/4fvgAD+61SNVN/qHV+2Nc/hfty5fadumMMv9UxfsnPB4Y5TdkMfmK1L8slrtxInI/M8H1VcJ34mFRmryftTY8YI+1gIPaE+qPYAAA=="
+  },
+  "pigmentation": {
+    "width": 896,
+    "height": 1200,
+    "widths": [
+      480,
+      828,
+      896
+    ],
+    "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQBACdASoQABUAPu1iqU2ppaOiMAgBMB2JQBOl8dAzqqRub+u8epI4YAD+6pbj20hsJSas6bUE5cVUtUWSPP/TSOO5VfKzZTK4MNkTQPyEg0s8QEAAAA=="
+  },
   "portrait": {
     "width": 1296,
     "height": 1728,
@@ -50,6 +80,16 @@
       1296
     ],
     "blur": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAAAwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JQBOmUABwaHdc2x3X6zeP9KAA/uHPk5oeGWwWMBzWOL79L6N2LS/MGCrAd0C+YG0aM3M3L2nYEgpCISIXHhcgxMF5AEW9/U0y02sWl+zXUHfXQ2bFyuYVLKDQmn7Zuqxal7OFVlDwm/Wz7hwyUCAA"
+  },
+  "rejuvenation": {
+    "width": 896,
+    "height": 1200,
+    "widths": [
+      480,
+      828,
+      896
+    ],
+    "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAADQAwCdASoQABUAPu1mqk4ppaOiMAgBMB2JQBdhxAAFKTGfgt1P0/QA/u04c50NC3c4VqBz6L2ByasAG9GONwUJSKWzHTN5zFo/NHQdiKx73fh3OTWHkbj70kKBLCpntvDzNRvMVAAAAA=="
   },
   "strands": {
     "width": 1104,

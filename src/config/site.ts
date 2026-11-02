@@ -16,16 +16,7 @@
  *  Do NOT add invented qualifications, reviews, prices, results or guarantees.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-import type {
-  Credential,
-  Faq,
-  FeaturedTreatment,
-  GalleryPair,
-  Hours,
-  Pending,
-  Testimonial,
-  TreatmentCategory,
-} from "./types";
+import type { DoctorCredentials, Faq, FeaturedTreatment, GalleryPair, Hours, Pending, Testimonial, TreatmentCategory } from "./types";
 
 /* ───────────────────────────── Business ───────────────────────────── */
 
@@ -71,21 +62,27 @@ export const doctor = {
   initials: "AT",
   title: "Dermatologist",
   /** Facts already confirmed by the brief. Safe to display. */
-  intro:
-    "Dr. Aditya Tolat is a dermatologist practising at New Dawn Clinics in Bandra, Mumbai, where he sees patients for skin, hair and aesthetic dermatology concerns.",
+  intro: "Dr. Aditya Tolat sees patients at New Dawn Clinics for skin, hair and scalp conditions, and for aesthetic dermatology.",
   /** Longer biography, written or approved by Dr. Aditya */
   bio: { value: null, verified: false } as Pending<string>,
   /** Path to a real professional portrait in /public, e.g. "/photos/dr-aditya.jpg" */
   portrait: null as string | null,
   portraitAlt: "Portrait of Dr. Aditya Tolat, dermatologist at New Dawn Clinics",
-  credentials: [
-    { label: "Medical degree", value: { value: null, verified: false } }, // e.g. "MBBS — <University>, <Year>"
-    { label: "Dermatology qualification", value: { value: null, verified: false } }, // e.g. "MD (Dermatology, Venereology & Leprosy) — …"
-    { label: "Medical registration", value: { value: null, verified: false } }, // e.g. "Maharashtra Medical Council — Reg. No. …"
-    { label: "Clinical experience", value: { value: null, verified: false } },
-    { label: "Fellowships & training", value: { value: null, verified: false } },
-    { label: "Professional memberships", value: { value: null, verified: false } }, // e.g. "IADVL"
-  ] as Credential[],
+  credentials: {
+    /** e.g. { value: { degree: "MBBS", institution: "…", year: "…" }, verified: true } */
+    education: [
+      { value: null, verified: false }, // Medical degree (MBBS)
+      { value: null, verified: false }, // Dermatology qualification (MD / DNB / Diploma)
+    ],
+    /** e.g. { value: { council: "Maharashtra Medical Council", number: "…" }, verified: true } */
+    registration: { value: null, verified: false },
+    /** e.g. { value: "10+ years in clinical dermatology", verified: true } (use the exact wording Dr. Aditya approves) */
+    experience: { value: null, verified: false },
+    /** Fellowships and additional clinical training, one entry each */
+    training: [],
+    /** Professional memberships, e.g. { value: "IADVL", verified: true } */
+    memberships: [],
+  } as DoctorCredentials,
   /** e.g. ["Acne & acne scars", "Pigmentation", "Hair loss"] — set verified: true once confirmed */
   clinicalInterests: { value: null, verified: false } as Pending<string[]>,
 };
@@ -93,10 +90,8 @@ export const doctor = {
 /* ───────────────────────────── Messages ───────────────────────────── */
 
 export const messages = {
-  whatsappDefault:
-    "Hello, I would like to enquire about booking a dermatology consultation with Dr. Aditya Tolat at New Dawn Clinics.",
-  enquiryDisclaimer:
-    "Sending an enquiry does not confirm an appointment. The clinic will contact you to confirm availability.",
+  whatsappDefault: "Hello, I would like to enquire about booking a dermatology consultation with Dr. Aditya Tolat at New Dawn Clinics.",
+  enquiryDisclaimer: "Sending an enquiry does not confirm an appointment. The clinic will contact you to confirm availability.",
   privacyNote:
     "Please don’t include detailed medical history or photos here. Dr. Aditya will discuss your concern with you during your consultation.",
   medicalDisclaimer:
@@ -116,17 +111,67 @@ export const treatmentCategories: TreatmentCategory[] = [
       "Assessment and management of everyday and chronic skin conditions: understanding what is happening in the skin before choosing how to treat it.",
     theme: { bg: "#E4E3D6", fg: "#2A1F1A", accent: "#5C5F43", art: "cells" },
     treatments: [
-      { slug: "acne", name: "Acne & acne management", blurb: "Understanding the type and triggers of acne, and discussing an appropriate plan for active breakouts.", availability: "unconfirmed" },
-      { slug: "acne-scars", name: "Acne scars", blurb: "Assessing scar type and depth to understand which approaches may be suitable.", availability: "unconfirmed" },
-      { slug: "pigmentation", name: "Pigmentation", blurb: "Evaluating dark patches and spots, and the factors that can contribute to them.", availability: "unconfirmed" },
-      { slug: "melasma", name: "Melasma", blurb: "A long-term, carefully managed approach to a pigmentation condition that can recur.", availability: "unconfirmed" },
-      { slug: "uneven-tone", name: "Uneven skin tone", blurb: "Looking at texture, tone and sun exposure together.", availability: "unconfirmed" },
-      { slug: "eczema", name: "Eczema", blurb: "Calming flare-ups and supporting the skin barrier over time.", availability: "unconfirmed" },
-      { slug: "psoriasis", name: "Psoriasis", blurb: "Ongoing management of a chronic inflammatory skin condition.", availability: "unconfirmed" },
+      {
+        slug: "acne",
+        name: "Acne & acne management",
+        blurb: "Understanding the type and triggers of your acne, then planning treatment for active breakouts.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "acne-scars",
+        name: "Acne scars",
+        blurb: "Scar type and depth decide which options make sense, so they are assessed first.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "pigmentation",
+        name: "Pigmentation",
+        blurb: "Evaluating dark patches and spots, and the factors that can contribute to them.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "melasma",
+        name: "Melasma",
+        blurb: "A long-term, carefully managed approach to a pigmentation condition that can recur.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "uneven-tone",
+        name: "Uneven skin tone",
+        blurb: "Looking at texture, tone and sun exposure together.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "eczema",
+        name: "Eczema",
+        blurb: "Calming flare-ups and supporting the skin barrier over time.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "psoriasis",
+        name: "Psoriasis",
+        blurb: "Ongoing management of a chronic inflammatory skin condition.",
+        availability: "unconfirmed",
+      },
       { slug: "rosacea", name: "Rosacea", blurb: "Identifying triggers for facial redness and sensitivity.", availability: "unconfirmed" },
-      { slug: "allergies", name: "Skin allergies", blurb: "Understanding reactions, rashes and possible irritants.", availability: "unconfirmed" },
-      { slug: "infections", name: "Skin infections", blurb: "Diagnosis of fungal, bacterial and viral skin infections.", availability: "unconfirmed" },
-      { slug: "other-conditions", name: "Other skin conditions", blurb: "Any persistent change in your skin is worth a proper assessment.", availability: "unconfirmed" },
+      {
+        slug: "allergies",
+        name: "Skin allergies",
+        blurb: "Understanding reactions, rashes and possible irritants.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "infections",
+        name: "Skin infections",
+        blurb: "Diagnosis of fungal, bacterial and viral skin infections.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "other-conditions",
+        name: "Other skin conditions",
+        blurb: "Any persistent change in your skin is worth a proper assessment.",
+        availability: "unconfirmed",
+      },
     ],
   },
   {
@@ -137,32 +182,115 @@ export const treatmentCategories: TreatmentCategory[] = [
       "Procedures that may refine texture, tone and the visible signs of ageing, discussed honestly, with realistic expectations and medical judgement.",
     theme: { bg: "#E9D3CA", fg: "#2A1F1A", accent: "#6A2D33", art: "glass" },
     treatments: [
-      { slug: "chemical-peels", name: "Chemical peels", blurb: "Controlled exfoliation that may be considered for tone and texture concerns.", availability: "unconfirmed", procedure: true },
-      { slug: "laser", name: "Laser treatments", blurb: "Laser-based procedures for selected skin and hair concerns, where suitable.", availability: "unconfirmed", procedure: true },
-      { slug: "rejuvenation", name: "Skin rejuvenation", blurb: "Approaches aimed at the overall quality and radiance of the skin.", availability: "unconfirmed", procedure: true },
-      { slug: "microneedling", name: "Microneedling", blurb: "A collagen-induction procedure sometimes used for texture and scarring.", availability: "unconfirmed", procedure: true },
-      { slug: "botox", name: "Botox", blurb: "Botulinum toxin injections for selected dynamic lines, after assessment.", availability: "unconfirmed", procedure: true },
-      { slug: "fillers", name: "Dermal fillers", blurb: "Injectable fillers for volume and contour, when appropriate.", availability: "unconfirmed", procedure: true },
-      { slug: "texture", name: "Skin texture treatments", blurb: "Addressing roughness, enlarged pores and uneven surface.", availability: "unconfirmed", procedure: true },
-      { slug: "anti-ageing", name: "Anti-ageing procedures", blurb: "A considered conversation about how skin changes with time.", availability: "unconfirmed", procedure: true },
-      { slug: "other-aesthetic", name: "Other aesthetic procedures", blurb: "Ask about other aesthetic dermatology options.", availability: "unconfirmed" },
+      {
+        slug: "chemical-peels",
+        name: "Chemical peels",
+        blurb: "Controlled exfoliation used for uneven tone, dullness and texture.",
+        availability: "unconfirmed",
+        procedure: true,
+      },
+      {
+        slug: "laser",
+        name: "Laser treatments",
+        blurb: "Laser-based procedures for pigmentation, scarring, texture and unwanted hair.",
+        availability: "unconfirmed",
+        procedure: true,
+      },
+      {
+        slug: "rejuvenation",
+        name: "Skin rejuvenation",
+        blurb: "Approaches aimed at the overall quality and radiance of the skin.",
+        availability: "unconfirmed",
+        procedure: true,
+      },
+      {
+        slug: "microneedling",
+        name: "Microneedling",
+        blurb: "A collagen-induction procedure sometimes used for texture and scarring.",
+        availability: "unconfirmed",
+        procedure: true,
+      },
+      {
+        slug: "botox",
+        name: "Botox",
+        blurb: "Botulinum toxin injections that soften expression lines, planned after an assessment.",
+        availability: "unconfirmed",
+        procedure: true,
+      },
+      {
+        slug: "fillers",
+        name: "Dermal fillers",
+        blurb: "Injectable fillers that restore volume and refine contour.",
+        availability: "unconfirmed",
+        procedure: true,
+      },
+      {
+        slug: "texture",
+        name: "Skin texture treatments",
+        blurb: "Addressing roughness, enlarged pores and uneven surface.",
+        availability: "unconfirmed",
+        procedure: true,
+      },
+      {
+        slug: "anti-ageing",
+        name: "Anti-ageing procedures",
+        blurb: "A considered conversation about how skin changes with time.",
+        availability: "unconfirmed",
+        procedure: true,
+      },
+      {
+        slug: "other-aesthetic",
+        name: "Other aesthetic procedures",
+        blurb: "Ask about other aesthetic dermatology options.",
+        availability: "unconfirmed",
+      },
     ],
   },
   {
     id: "hair",
     name: "Hair & Scalp",
     shortName: "Hair & Scalp",
-    intro:
-      "Hair and scalp concerns often have more than one cause. Care begins with finding out why, before deciding what to do.",
+    intro: "Hair and scalp concerns often have more than one cause. Care begins with finding out why, before deciding what to do.",
     theme: { bg: "#2E3A2D", fg: "#F3ECE2", accent: "#E8BC9D", art: "strands" },
     treatments: [
-      { slug: "hair-fall-assessment", name: "Hair fall assessment", blurb: "A structured look at pattern, history and possible contributing factors.", availability: "unconfirmed" },
-      { slug: "hair-thinning", name: "Hair thinning", blurb: "Understanding gradual changes in hair density.", availability: "unconfirmed" },
-      { slug: "hair-loss", name: "Hair loss", blurb: "Evaluating different types of hair loss and possible approaches.", availability: "unconfirmed" },
+      {
+        slug: "hair-fall-assessment",
+        name: "Hair fall assessment",
+        blurb: "A structured look at pattern, history and possible contributing factors.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "hair-thinning",
+        name: "Hair thinning",
+        blurb: "Understanding gradual changes in hair density.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "hair-loss",
+        name: "Hair loss",
+        blurb: "Evaluating different types of hair loss and possible approaches.",
+        availability: "unconfirmed",
+      },
       { slug: "dandruff", name: "Dandruff", blurb: "Persistent flaking and itching of the scalp.", availability: "unconfirmed" },
-      { slug: "scalp-conditions", name: "Scalp conditions", blurb: "Inflammation, irritation and other scalp concerns.", availability: "unconfirmed" },
-      { slug: "prp", name: "PRP treatment", blurb: "Platelet-rich plasma, a procedure that may be discussed for selected hair concerns.", availability: "unconfirmed", procedure: true },
-      { slug: "other-hair", name: "Other hair & scalp procedures", blurb: "Ask about other hair and scalp options.", availability: "unconfirmed" },
+      {
+        slug: "scalp-conditions",
+        name: "Scalp conditions",
+        blurb: "Inflammation, irritation and other scalp concerns.",
+        availability: "unconfirmed",
+      },
+      {
+        slug: "prp",
+        name: "PRP treatment",
+        blurb: "Platelet-rich plasma injections into the scalp, used for some types of hair thinning.",
+        availability: "unconfirmed",
+        procedure: true,
+      },
+      {
+        slug: "other-hair",
+        name: "Other hair & scalp procedures",
+        blurb: "Ask about other hair and scalp options.",
+        availability: "unconfirmed",
+      },
     ],
   },
 ];
@@ -187,18 +315,26 @@ export const featured: FeaturedTreatment[] = [
     ],
     factors: {
       heading: "What can contribute",
-      items: ["Excess oil production", "Blocked pores", "Bacteria and inflammation", "Hormonal changes", "Genetics and family history", "Some products, medicines or lifestyle factors"],
+      items: [
+        "Excess oil production",
+        "Blocked pores",
+        "Bacteria and inflammation",
+        "Hormonal changes",
+        "Genetics and family history",
+        "Some products, medicines or lifestyle factors",
+      ],
     },
     approaches: [
       "Topical treatments applied to the skin",
-      "Oral medicines, where clinically appropriate",
-      "Chemical peels for selected cases",
+      "Oral medicines for some types of acne",
+      "Chemical peels",
       "Procedures for scars such as microneedling or laser, depending on scar type",
       "Skincare guidance to support treatment",
     ],
     consultation:
       "Dr. Aditya will discuss your history, examine your skin and talk you through options that may be suitable, along with realistic expectations and timelines.",
-    art: "texture",
+    art: "acne",
+    fallbackArt: "texture",
     theme: { bg: "#F3ECE2", fg: "#2A1F1A" },
     related: ["acne", "acne-scars", "chemical-peels", "microneedling", "laser"],
   },
@@ -216,18 +352,25 @@ export const featured: FeaturedTreatment[] = [
     ],
     factors: {
       heading: "What can contribute",
-      items: ["Sun exposure", "Hormonal influences", "Inflammation after acne or injury", "Genetic tendency", "Certain medicines or products"],
+      items: [
+        "Sun exposure",
+        "Hormonal influences",
+        "Inflammation after acne or injury",
+        "Genetic tendency",
+        "Certain medicines or products",
+      ],
     },
     approaches: [
       "Sun protection and daily skincare guidance",
       "Topical treatments",
-      "Chemical peels, where appropriate",
-      "Laser or light-based options for selected cases",
+      "Chemical peels",
+      "Laser or light-based treatments",
       "Ongoing maintenance to help manage recurrence",
     ],
     consultation:
       "Your consultation looks at the type and pattern of pigmentation so that any treatment discussed is suited to your skin and your expectations.",
-    art: "cream",
+    art: "pigmentation",
+    fallbackArt: "cream",
     theme: { bg: "#E9D3CA", fg: "#2A1F1A" },
     related: ["pigmentation", "melasma", "uneven-tone", "chemical-peels", "laser"],
   },
@@ -235,7 +378,7 @@ export const featured: FeaturedTreatment[] = [
     slug: "hair-fall-and-hair-loss",
     title: "Hair Fall & Hair Loss",
     titleLines: ["Hair fall &", "hair loss"],
-    summary: "Understand possible causes of hair loss and appropriate treatment approaches.",
+    summary: "Understand what can cause hair loss, and how it is treated.",
     seoTitle: "Hair Loss Consultation in Bandra, Mumbai | Dr. Aditya Tolat, Dermatologist",
     seoDescription:
       "Hair fall, thinning or hair loss? Consult dermatologist Dr. Aditya Tolat at New Dawn Clinics, Bandra to understand possible causes and appropriate approaches.",
@@ -245,18 +388,26 @@ export const featured: FeaturedTreatment[] = [
     ],
     factors: {
       heading: "What can contribute",
-      items: ["Genetic pattern hair loss", "Stress, illness or recent surgery", "Nutritional factors", "Hormonal and thyroid changes", "Scalp conditions", "Hair styling and traction"],
+      items: [
+        "Genetic pattern hair loss",
+        "Stress, illness or recent surgery",
+        "Nutritional factors",
+        "Hormonal and thyroid changes",
+        "Scalp conditions",
+        "Hair styling and traction",
+      ],
     },
     approaches: [
       "Clinical assessment of hair and scalp",
-      "Investigations, where indicated",
+      "Blood tests or other investigations, if needed",
       "Topical or oral treatments",
-      "Scalp procedures such as PRP for selected cases",
+      "Scalp procedures such as PRP",
       "Guidance on hair and scalp care",
     ],
     consultation:
       "Dr. Aditya will look at the pattern of hair loss, your history and your scalp, and explain which approaches may be appropriate for you.",
     art: "strands",
+    fallbackArt: "strands",
     theme: { bg: "#2E3A2D", fg: "#F3ECE2" },
     related: ["hair-fall-assessment", "hair-thinning", "hair-loss", "prp"],
   },
@@ -280,26 +431,27 @@ export const featured: FeaturedTreatment[] = [
       "Chemical peels",
       "Microneedling",
       "Laser-based procedures",
-      "Injectables such as Botox or fillers, where appropriate",
+      "Injectables such as Botox or fillers",
       "A supporting skincare routine",
     ],
     consultation:
       "Aesthetic procedures are discussed only after understanding your skin, your goals and whether a procedure is suitable for you.",
-    art: "glass",
-    theme: { bg: "#F3ECE2", fg: "#2A1F1A" },
+    art: "rejuvenation",
+    fallbackArt: "glass",
+    theme: { bg: "#E6D8C8", fg: "#2A1F1A" },
     related: ["rejuvenation", "chemical-peels", "microneedling", "botox", "fillers", "anti-ageing", "texture"],
   },
   {
     slug: "laser-treatments",
     title: "Laser Treatments",
     titleLines: ["Laser", "treatments"],
-    summary: "An introduction to laser-based dermatological procedures, where offered.",
+    summary: "An introduction to laser-based dermatology and what it can be used for.",
     seoTitle: "Laser Treatments | Dermatology at New Dawn Clinics, Bandra",
     seoDescription:
       "An introduction to laser-based dermatology procedures. Ask Dr. Aditya Tolat at New Dawn Clinics, Bandra which laser options may suit your concern.",
     overview: [
       "Dermatological lasers use focused light energy. Different lasers are designed for different purposes, from pigmentation and scarring to hair reduction and skin resurfacing.",
-      "Whether a laser is appropriate depends on your concern, skin type and medical history. Please ask the clinic which laser procedures are currently available.",
+      "Whether a laser suits you depends on your concern, your skin type and your medical history.",
     ],
     factors: {
       heading: "Concerns lasers may be used for",
@@ -308,12 +460,13 @@ export const featured: FeaturedTreatment[] = [
     approaches: [
       "Assessment of skin type and suitability",
       "Choice of laser matched to the concern",
-      "A course of sessions, where indicated",
+      "A course of sessions, if needed",
       "Pre- and post-procedure skincare and sun protection",
     ],
     consultation:
       "Your consultation will cover whether a laser procedure is suitable, what it involves, possible side effects and what to realistically expect.",
-    art: "arch",
+    art: "laser",
+    fallbackArt: "arch",
     theme: { bg: "#E4E3D6", fg: "#2A1F1A" },
     related: ["laser"],
   },

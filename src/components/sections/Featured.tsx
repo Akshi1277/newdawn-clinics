@@ -1,25 +1,18 @@
 "use client";
 
-import { m, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 import { useRef } from "react";
 import { featured } from "@/config/site";
 import type { FeaturedTreatment } from "@/config/types";
 import { waTreatment } from "@/lib/links";
 import { Button } from "@/components/ui/Button";
-import { Picture } from "@/components/ui/Picture";
-
-const ART_ALT: Record<FeaturedTreatment["art"], string> = {
-  cream: "Abstract artwork: a soft swirl of ivory cream",
-  glass: "Abstract artwork: a translucent amber glass ribbon",
-  texture: "Abstract artwork: macro study of fine surface relief",
-  botanical: "Abstract artwork: sage leaves in soft shadow",
-  strands: "Abstract artwork: fine golden strands flowing across deep green",
-  arch: "Abstract artwork: warm light falling across a plaster arch",
-};
+import { ART_ALT, Picture, resolveArt } from "@/components/ui/Picture";
 
 function Panel({ f, i }: { f: FeaturedTreatment; i: number }) {
+  const art = resolveArt(f.art, f.fallbackArt);
   const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const artY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
   const dark = f.theme.fg.toLowerCase() === "#f3ece2";
@@ -53,8 +46,8 @@ function Panel({ f, i }: { f: FeaturedTreatment; i: number }) {
           </div>
           <div className="md:col-span-5">
             <m.figure style={reduce ? undefined : { y: artY }} className="mx-auto w-[78%] max-w-[480px] md:w-full">
-              <div className={`relative aspect-[4/5] overflow-hidden rounded-t-[999px]`}>
-                <Picture name={f.art} sizes="(min-width: 768px) 36vw, 78vw" alt={ART_ALT[f.art]} className="h-full w-full object-cover" />
+              <div className="relative aspect-[4/5] overflow-hidden rounded-t-[999px] shadow-[0_40px_80px_-44px_rgba(42,31,26,0.55)]">
+                <Picture name={art} sizes="(min-width: 768px) 36vw, 78vw" alt={ART_ALT[art]} className="h-full w-full object-cover" />
               </div>
             </m.figure>
           </div>

@@ -6,9 +6,9 @@ import { ArrowRight } from "lucide-react";
 
 export function Intro() {
   return (
-    <section id="about" aria-labelledby="about-title" className="relative overflow-hidden border-t border-line bg-ivory py-28 md:py-40">
-      <div className="mx-auto grid max-w-[1600px] gap-16 px-5 md:grid-cols-12 md:gap-8 md:px-10">
-        <div className="md:col-span-7">
+    <section id="about" aria-labelledby="about-title" className="relative overflow-hidden border-t border-line bg-ivory py-24 md:py-36">
+      <div className="mx-auto grid max-w-[1600px] gap-16 px-5 md:px-10 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-7">
           <Heading id="about-title" text="Your skin is unique. Your care should be too." className="max-w-[16ch] text-espresso" />
           <ScrollWords
             className="mt-12 max-w-[30ch] font-serif text-[clamp(1.6rem,2.6vw,2.6rem)] leading-[1.18] text-espresso"
@@ -35,8 +35,8 @@ export function Intro() {
           </Reveal>
         </div>
 
-        <div className="relative md:col-span-4 md:col-start-9">
-          <div className="md:sticky md:top-28">
+        <div className="relative mx-auto w-full max-w-sm lg:col-span-4 lg:col-start-9 lg:mx-0 lg:max-w-none">
+          <div className="lg:sticky lg:top-28">
             <Reveal variant="mask" className="relative">
               <figure>
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[999px_999px_0_0]">

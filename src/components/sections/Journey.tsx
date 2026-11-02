@@ -1,7 +1,8 @@
 "use client";
 
 import { Heading } from "@/components/ui/Heading";
-import { m, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 import { useEffect, useRef, useState } from "react";
 
 const STAGES = [
@@ -84,7 +85,7 @@ function PinnedJourney() {
 }
 
 export function Journey() {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const [wide, setWide] = useState(false);
 
   useEffect(() => {
@@ -98,7 +99,7 @@ export function Journey() {
   if (wide && !reduce) return <PinnedJourney />;
 
   return (
-    <section aria-labelledby="journey-title" className="bg-ivory py-24 md:py-32">
+    <section aria-labelledby="journey-title" className="bg-ivory py-24 md:py-36">
       <Header pinned={false} />
       <ol
         tabIndex={0}

@@ -56,7 +56,7 @@ export function Button({
   const isExternal = external ?? /^(https?:|mailto:|tel:)/.test(href);
   // Dynamic-route pages in the static export are loaded as plain documents.
   const plainDoc = href.startsWith("/treatments/");
-  const cls = `group inline-flex items-center gap-3 rounded-full font-sans font-semibold tracking-[0.01em] transition-colors duration-500 ease-out-expo ${
+  const cls = `group inline-flex items-center gap-3 rounded-full font-sans font-semibold tracking-[0.01em] transition-[color,background-color,border-color,transform] duration-500 ease-out-expo active:scale-[0.98] ${
     size === "lg" ? "py-2.5 pl-7 pr-2.5 text-[1.02rem]" : "py-2 pl-5 pr-2 text-[0.94rem]"
   } ${styles[variant]} ${className}`;
   const inner = (

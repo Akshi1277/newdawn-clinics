@@ -1,7 +1,7 @@
 import { Heading } from "@/components/ui/Heading";
 import { business, doctor } from "@/config/site";
 import { isVerified } from "@/config/types";
-import { mapsLink, telLink } from "@/lib/links";
+import { directionsLabel, directionsLink, hasVerifiedLocation, telLink } from "@/lib/links";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 
@@ -64,8 +64,7 @@ export function Location() {
         <div className="md:col-span-5">
           <Heading id="location-title" text="Find us in Bandra." className="text-espresso" />
           <p className="mt-8 max-w-[40ch] text-lead text-espresso/90">
-            New Dawn Clinics is Dr. Aditya Tolat’s dermatology practice in Bandra. Come with your questions; you’ll leave
-            knowing what he saw, what your options are, and what happens next.
+            Consultations are by appointment. Message the clinic on WhatsApp for the exact address, directions and a time that suits you.
           </p>
           <Reveal className="mt-12">
             <dl className="border-t border-espresso/25">
@@ -99,12 +98,10 @@ export function Location() {
                 </div>
               )}
             </dl>
-            {!address && (
-              <p className="mt-4 text-sm text-espresso/90">Message or call the clinic for the exact address before your visit.</p>
-            )}
+            {!address && <p className="mt-4 text-sm text-espresso/90">The full address is shared when you message or call the clinic.</p>}
             <div className="mt-8">
-              <Button href={mapsLink()} icon="external" size="lg">
-                Get Directions
+              <Button href={directionsLink()} icon={hasVerifiedLocation() ? "external" : "whatsapp"} size="lg">
+                {directionsLabel()}
               </Button>
             </div>
           </Reveal>

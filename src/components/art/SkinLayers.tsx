@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion } from "framer-motion";
+import { m } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -9,7 +10,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
  * with follicles and cells. Lines draw in when the drawing enters the viewport.
  */
 export function SkinLayers({ className = "" }: { className?: string }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const draw = (delay: number) =>
     reduce
       ? {}

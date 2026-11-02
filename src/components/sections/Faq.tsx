@@ -1,7 +1,8 @@
 "use client";
 
 import { Heading } from "@/components/ui/Heading";
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 import { Plus } from "lucide-react";
 import { useId, useState } from "react";
 import { faqs, business } from "@/config/site";
@@ -15,11 +16,11 @@ const pendingFaqs = faqs.filter((f) => !(f.verified && f.a));
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const uid = useId();
 
   return (
-    <section id="faqs" aria-labelledby="faq-title" className="bg-ivory py-24 md:py-40">
+    <section id="faqs" aria-labelledby="faq-title" className="bg-ivory py-24 md:py-36">
       <div className="mx-auto grid max-w-[1600px] gap-14 px-5 md:grid-cols-12 md:gap-8 md:px-10">
         <div className="md:col-span-4">
           <div className="md:sticky md:top-28">
@@ -51,7 +52,7 @@ export function Faq() {
                       className="group flex w-full items-start gap-6 py-6 text-left md:py-7"
                     >
                       <span
-                        className={`flex-1 font-serif text-[clamp(1.35rem,2.1vw,1.9rem)] leading-[1.15] text-espresso transition-transform duration-500 ease-out-expo ${
+                        className={`flex-1 pr-2 font-serif text-[clamp(1.35rem,2.1vw,1.9rem)] leading-[1.15] text-espresso transition-transform duration-500 ease-out-expo ${
                           isOpen ? "italic" : "group-hover:translate-x-1.5"
                         }`}
                       >

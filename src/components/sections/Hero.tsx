@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 import { useRef } from "react";
 import { SplitText } from "@/components/motion/SplitText";
 import { Button } from "@/components/ui/Button";
@@ -12,7 +13,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
 
   // Scroll hand-off into the marquee band
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });

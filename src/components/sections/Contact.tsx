@@ -10,7 +10,7 @@ export function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-title"
-      className="on-dark relative overflow-hidden bg-burgundy py-24 text-ivory md:py-40"
+      className="on-dark relative overflow-hidden bg-burgundy py-24 text-ivory md:py-36"
     >
       {/* Organic animated forms */}
       <div aria-hidden className="pointer-events-none absolute inset-0">

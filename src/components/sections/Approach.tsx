@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { m, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 import { useRef } from "react";
 import { Topo } from "@/components/art/Topo";
 
@@ -80,7 +81,7 @@ function Word({ p, i, progress }: { p: (typeof PRINCIPLES)[number]; i: number; p
 
 export function Approach() {
   const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const bg = useTransform(scrollYProgress, stops, each("bg"));
   const fg = useTransform(scrollYProgress, stops, each("fg"));
@@ -129,16 +130,7 @@ export function Approach() {
           <p className="label hidden opacity-75 md:block">The New Dawn approach</p>
         </div>
 
-        {/* Screen-reader version */}
-        <ol className="sr-only">
-          {PRINCIPLES.map((p) => (
-            <li key={p.word}>
-              {p.word}. {p.text}
-            </li>
-          ))}
-        </ol>
-
-        <div aria-hidden className="absolute inset-0 z-10">
+        <div className="absolute inset-0 z-10">
           {PRINCIPLES.map((p, i) => (
             <Word key={p.word} p={p} i={i} progress={scrollYProgress} />
           ))}

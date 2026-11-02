@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, m, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
+import { AnimatePresence, m, useMotionValueEvent, useScroll } from "framer-motion";
+import { useReducedMotionSafe } from "@/components/motion/useReducedMotionSafe";
 import { Phone, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,11 +20,34 @@ export function Nav() {
   const scrolled = scrolledPast || !isHome;
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 80));
+
+  // Highlight the section currently in view (homepage only).
+  const [current, setCurrent] = useState<string | null>(null);
+  useEffect(() => {
+    if (!isHome) return;
+    const ids = nav.map((n) => n.href.split("#")[1]).filter((id) => id && id !== "top");
+    const els = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setCurrent(e.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    const onTop = () => window.scrollY < window.innerHeight * 0.5 && setCurrent(null);
+    window.addEventListener("scroll", onTop, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onTop);
+    };
+  }, [isHome]);
 
   // Lock scroll, trap focus and close on Escape while the mobile menu is open.
   useEffect(() => {
@@ -80,7 +104,8 @@ export function Nav() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="relative rounded-full px-3.5 py-2 text-[0.9rem] font-medium text-espresso/80 transition-colors hover:text-espresso after:absolute after:inset-x-3.5 after:bottom-1.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-out-expo hover:after:scale-x-100"
+                    aria-current={current && item.href.endsWith(`#${current}`) ? "location" : undefined}
+                    className="relative rounded-full px-3.5 py-2 text-[0.9rem] font-medium text-espresso/80 transition-colors hover:text-espresso aria-[current=location]:text-espresso after:absolute after:inset-x-3.5 after:bottom-1.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-out-expo hover:after:scale-x-100 aria-[current=location]:after:scale-x-100"
                   >
                     {item.label}
                   </Link>

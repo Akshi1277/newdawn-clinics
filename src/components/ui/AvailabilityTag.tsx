@@ -8,11 +8,8 @@ export function AvailabilityTag({ availability, tone = "dark" }: { availability:
         tone === "light" ? "text-ivory/75" : "text-espresso/70"
       }`}
     >
-      <span
-        aria-hidden
-        className={`size-1.5 rounded-full ${confirmed ? "bg-current" : "border border-current"}`}
-      />
-      {confirmed ? "Offered" : "Ask about availability"}
+      <span aria-hidden className={`size-1.5 rounded-full ${confirmed ? "bg-current" : "border border-current"}`} />
+      {confirmed ? "Offered at the clinic" : "Ask about availability"}
     </span>
   );
 }
