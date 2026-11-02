@@ -71,7 +71,7 @@ export function Doctor() {
           <div className="md:col-span-6 md:col-start-7">
             <h3 className="text-espresso">
               <span className="label block text-espresso/75">Dr.</span>
-              <span className="mt-3 block font-serif text-[clamp(3.4rem,8vw,8rem)] leading-[0.86] tracking-[-0.035em]">
+              <span className="mt-3 block font-serif text-[clamp(3.4rem,8vw,8rem)] leading-[1.02] tracking-[-0.035em]">
                 <span className="block">Aditya</span> <span className="block pl-[0.8em] italic text-olive">Tolat</span>
               </span>
             </h3>

@@ -22,7 +22,7 @@ export function Contact() {
         <div className="lg:col-span-6">
           <SplitText
             id="contact-title"
-            className="font-serif text-[clamp(3rem,7.4vw,7.6rem)] leading-[0.9] tracking-[-0.03em]"
+            className="font-serif text-[clamp(3rem,7.4vw,7.6rem)] leading-[1.08] tracking-[-0.03em]"
             lines={[
               { text: "Your skin journey" },
               { text: "starts with" },

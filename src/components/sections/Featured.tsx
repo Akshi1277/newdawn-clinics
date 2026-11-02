@@ -30,7 +30,7 @@ function Panel({ f, i }: { f: FeaturedTreatment; i: number }) {
       >
         <div className="relative z-10 mx-auto grid h-full w-full max-w-[1600px] items-center gap-10 px-5 py-20 md:grid-cols-12 md:px-10 md:py-0">
           <div className="md:col-span-7">
-            <h3 id={`feat-${f.slug}`} className="font-serif text-[clamp(3rem,8.4vw,8.5rem)] leading-[0.88] tracking-[-0.03em]">
+            <h3 id={`feat-${f.slug}`} className="font-serif text-[clamp(3rem,8.4vw,8.5rem)] leading-[1] tracking-[-0.03em]">
               <span className="block">{f.titleLines[0]}</span>
               <span className="block">{f.titleLines[1]}</span>
             </h3>

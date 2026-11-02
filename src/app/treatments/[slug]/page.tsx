@@ -69,7 +69,7 @@ export default async function TreatmentPage({ params }: PageProps<"/treatments/[
               trigger="mount"
               by="chars"
               delay={0.1}
-              className="mt-8 font-serif text-[clamp(3.2rem,9vw,9rem)] leading-[0.88] tracking-[-0.03em]"
+              className="mt-8 font-serif text-[clamp(3.2rem,9vw,9rem)] leading-[1] tracking-[-0.03em]"
               lines={[{ text: f.titleLines[0] }, { text: f.titleLines[1], italic: true, className: "pl-[0.5em]" }]}
             />
             <p className="mt-8 max-w-[44ch] text-lead opacity-90">{f.summary}</p>
@@ -194,7 +194,7 @@ export default async function TreatmentPage({ params }: PageProps<"/treatments/[
             {others.map((o) => (
               <li key={o.slug} className="border-b border-line">
                 <a href={`/treatments/${o.slug}/`} className="group flex items-center justify-between gap-6 py-6">
-                  <span className="font-serif text-[clamp(1.8rem,3.6vw,3.2rem)] leading-none transition-transform duration-500 ease-out-expo group-hover:translate-x-3 group-hover:italic">
+                  <span className="font-serif text-[clamp(1.8rem,3.6vw,3.2rem)] leading-[1.08] transition-transform duration-500 ease-out-expo group-hover:translate-x-3 group-hover:italic">
                     {o.title}
                   </span>
                   <ArrowUpRight className="size-6 shrink-0 transition-transform duration-500 group-hover:rotate-45" strokeWidth={1.25} />

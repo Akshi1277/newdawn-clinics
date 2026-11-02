@@ -173,7 +173,7 @@ export function HeroLoupe() {
               exit={reduce ? undefined : { y: "-60%", opacity: 0 }}
               transition={{ duration: 0.5, ease }}
             >
-              <p className="font-serif text-[1.65rem] italic leading-none text-burgundy">{spot.label}</p>
+              <p className="font-serif text-[1.65rem] italic leading-[1.08] text-burgundy">{spot.label}</p>
               <p className="mt-2 text-[0.92rem] leading-snug text-espresso/85">{spot.note}</p>
             </m.div>
           </AnimatePresence>

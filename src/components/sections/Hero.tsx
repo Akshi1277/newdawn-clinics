@@ -26,7 +26,7 @@ export function Hero() {
       ref={ref}
       id="top"
       aria-labelledby="hero-title"
-      className="grain relative overflow-hidden bg-ivory pb-20 pt-28 md:pb-24 md:pt-32"
+      className="grain relative overflow-hidden bg-ivory pb-20 pt-28 md:pb-24 md:pt-32 lg:pt-28"
     >
       {/* Contour field behind the portrait */}
       <m.div
@@ -40,9 +40,9 @@ export function Hero() {
         <Topo variant="hero" className="h-full w-full" opacity={0.2} />
       </m.div>
 
-      <div className="relative z-[2] mx-auto grid max-w-[1600px] gap-10 px-5 md:px-10 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-0">
+      <div className="relative z-[2] mx-auto grid max-w-[1600px] gap-10 px-5 md:px-10 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-8 lg:gap-y-0">
         {/* Headline */}
-        <m.div className="relative z-[3] lg:col-span-7 lg:row-start-1 lg:pt-[7vh]" style={reduce ? undefined : { y: textY }}>
+        <m.div className="relative z-[3] lg:col-span-7 lg:row-start-1 lg:pt-[3vh]" style={reduce ? undefined : { y: textY }}>
           <m.p
             className="label text-espresso/75"
             initial={reduce ? false : { opacity: 0, y: 12 }}
@@ -61,7 +61,7 @@ export function Hero() {
             by="chars"
             delay={0.2}
             stagger={0.028}
-            className="mt-8 font-serif text-display-xl text-espresso md:mt-10"
+            className="mt-8 font-serif text-[clamp(3.4rem,min(9.5vw,14svh),10rem)] leading-[0.98] tracking-[-0.03em] text-espresso md:mt-10 lg:mt-7"
             lines={[
               { text: "Your skin." },
               { text: "Understood.", italic: true, className: "pl-[0.5em] text-burgundy md:pl-[0.9em]" },
@@ -72,7 +72,7 @@ export function Hero() {
 
         {/* Portrait under the loupe: sits between headline and copy on mobile */}
         <m.div
-          className="relative mx-auto w-[88%] max-w-[560px] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mr-0 lg:w-full lg:self-start"
+          className="relative mx-auto w-[88%] max-w-[560px] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mr-0 lg:w-[min(100%,calc((100svh-10rem)*0.75))] lg:max-w-none lg:self-start lg:justify-self-end"
           style={reduce ? undefined : { y: artY }}
           initial={reduce ? false : { clipPath: "inset(20% -60% -60% -60%)", y: 40 }}
           animate={{ clipPath: "inset(-60% -60% -60% -60%)", y: 0 }}
@@ -84,7 +84,7 @@ export function Hero() {
         {/* Copy + actions */}
         <m.div className="relative z-[3] lg:col-span-7 lg:row-start-2" style={reduce ? undefined : { y: textY }}>
           <m.p
-            className="max-w-[38ch] text-lead text-espresso/85 lg:mt-10"
+            className="max-w-[38ch] text-lead text-espresso/85 lg:mt-8"
             initial={reduce ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease, delay: 1.0 }}

@@ -22,13 +22,13 @@
 
   /* Fluid editorial scale */
   --text-display-xl: clamp(3.4rem, 10.5vw, 11rem);
-  --text-display-xl--line-height: 0.86;
+  --text-display-xl--line-height: 1.02;
   --text-display-xl--letter-spacing: -0.03em;
   --text-display-l: clamp(2.6rem, 6.2vw, 6.5rem);
-  --text-display-l--line-height: 0.92;
+  --text-display-l--line-height: 1.07;
   --text-display-l--letter-spacing: -0.025em;
   --text-display-m: clamp(2rem, 4vw, 3.75rem);
-  --text-display-m--line-height: 1;
+  --text-display-m--line-height: 1.06;
   --text-display-m--letter-spacing: -0.02em;
   --text-title: clamp(1.5rem, 2.2vw, 2rem);
   --text-title--line-height: 1.1;

@@ -62,7 +62,7 @@ function Word({ p, i, progress }: { p: (typeof PRINCIPLES)[number]; i: number; p
     <>
       <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 overflow-hidden text-center">
         <m.p
-          className="font-serif text-[clamp(3rem,12.5vw,13.5rem)] uppercase leading-[0.95] tracking-[-0.03em]"
+          className="font-serif text-[clamp(3rem,12.5vw,13.5rem)] uppercase leading-[1] tracking-[-0.03em]"
           style={{ y: i === 0 ? yFirst : y }}
         >
           {p.word}
@@ -124,7 +124,7 @@ export function Approach() {
         </m.div>
 
         <div className="relative z-10 mx-auto flex max-w-[1600px] items-start justify-between gap-6 px-5 pt-28 md:px-10">
-          <h2 id="approach-title" className="max-w-[16ch] font-serif text-[clamp(1.6rem,2.6vw,2.5rem)] leading-[1.05]">
+          <h2 id="approach-title" className="max-w-[16ch] font-serif text-[clamp(1.6rem,2.6vw,2.5rem)] leading-[1.15]">
             Dermatology, <span className="italic">approached thoughtfully.</span>
           </h2>
           <p className="label hidden opacity-75 md:block">The New Dawn approach</p>

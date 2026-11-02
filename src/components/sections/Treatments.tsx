@@ -127,7 +127,7 @@ export function Treatments() {
                       }`}
                     />
                     <span
-                      className={`font-serif leading-none tracking-[-0.02em] transition-[opacity,transform] duration-700 ease-out-expo text-[1.65rem] lg:text-[clamp(2rem,4.2vw,3.6rem)] ${
+                      className={`font-serif leading-[1.08] tracking-[-0.02em] transition-[opacity,transform] duration-700 ease-out-expo text-[1.65rem] lg:text-[clamp(2rem,4.2vw,3.6rem)] ${
                         selected ? "italic opacity-100" : "opacity-65 group-hover:opacity-90 lg:group-hover:translate-x-2"
                       }`}
                     >
@@ -254,7 +254,7 @@ export function Treatments() {
                   <AnimatePresence mode="wait" initial={false}>
                     <m.p
                       key={cat.id}
-                      className={`font-serif text-[clamp(3rem,6vw,6rem)] italic leading-[0.9] ${dark ? "text-ivory" : "text-espresso"}`}
+                      className={`font-serif text-[clamp(3rem,6vw,6rem)] italic leading-[1.02] ${dark ? "text-ivory" : "text-espresso"}`}
                       initial={reduce ? false : { y: 40, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       exit={reduce ? undefined : { y: -20, opacity: 0 }}
